@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:22:29 by jbettini          #+#    #+#             */
-/*   Updated: 2024/03/31 11:12:12 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/02 03:22:32 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 typedef struct  s_room
 {
 	t_list  *neigh;
+    int     numOfNeigh;
     int     posX, posY;
     bool    isStart, isEnd;
     char    *name;
@@ -25,6 +26,7 @@ typedef struct  s_room
     bool    isInqueue;
     int     usedInPath;
     int     neighSize;
+    int     inPath;
 }				t_room;
 
 typedef struct  s_graph
@@ -42,17 +44,23 @@ typedef struct  s_simulation
     int     ants;
     t_list  *roomsNames;
     t_list  *paths;
-    // t_paths *allpaths;
 }               t_simulation;
 
 // typedef struct  s_paths
 // {
-//     t_list  *roomList;
-//     t_list  *multiNode;
-//     bool    unique;
-//     t_paths *next;
-//     t_paths *prev;
+//     	t_list  *roomList;
+//     	t_list  *multiRoom;
+//     	t_list  *problematicRoom;
+//     	bool    unique;
+//		int		pathSize;
+//		int		heuristic;
 // }               t_paths;
+
+// typedef struct  s_ant
+// {
+//     	t_list  *path;
+//		t_room	*currentRoom;
+// }               t_ant;
 
 
 

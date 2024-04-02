@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 19:17:50 by jbettini          #+#    #+#             */
-/*   Updated: 2024/03/31 11:08:50 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/02 04:06:23 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_simulation    *parseStdin() {
 
     while ((line = get_next_line(0))) {
         line = ft_strdup_except(line, '\n');
-        // ft_putendl(line);
+        ft_putendl(line);
         if (isNullOrEmpty(line))// Check if the current line is empty or null
             break ;
         if (isComment(line)) {        // skip comment 
