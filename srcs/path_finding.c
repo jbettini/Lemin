@@ -10,6 +10,19 @@ void custom_pop(t_list **list, t_list **poped) {
     ft_lstadd_back(poped, first);
 }
 
+void    resetGraph(t_simulation **s){
+    t_graph *g = (*s)->graph;
+    t_room  *r = NULL;
+    t_list  *tmp = g->rooms;
+
+    while (tmp) {
+        r = (t_room *)tmp->content;
+        r->isSeen = NOT_SEEN;
+        r->isInqueue = 0;
+        tmp = tmp->next;
+    }
+}
+
 bool enqueue(t_room *prevRoom, t_list **queue) {
     t_list  *neigh = prevRoom->neigh;
     t_room  *roomTmp = NULL;
@@ -28,39 +41,35 @@ bool enqueue(t_room *prevRoom, t_list **queue) {
     return false;
 }
 
-char    **createPath(t_list *queue){
-    char    **ret = NULL;
-    size_t  size = ft_lstsize_prev(queue);
-    ret = malloc(sizeof(char *) * (size + 1));
-    ret[size--] = NULL;
-    t_room *tmp = NULL;
-    while (queue) {
-        tmp = (t_room *)queue->content;
-        ret[size--] = ft_strdup(tmp->name);
-        queue = queue->prev;
+t_path  *createPath(t_list **queue, t_room *start){
+    t_path  *ret = getEmptyPath();
+    t_list  *tmp = *queue;
+    t_room  *roomTmp = NULL;
+    while (tmp) {
+        roomTmp = (t_room *)tmp->content;
+        if (isMultiNode(roomTmp) && roomTmp->isEnd == false && roomTmp->isStart == false) {
+            roomTmp->usedInPath++;
+            ft_lstadd_back(&(ret->multiRoom), ft_lstnew(roomTmp));
+        }
+        ft_lstadd_front(&(ret->roomList), ft_lstnew(roomTmp));
+        tmp = tmp->prev;
     }
+    roomTmp = (t_room *)ret->roomList->content;
+    if (!roomTmp->isStart)
+        ft_lstadd_front(&(ret->roomList), ft_lstnew(start));
+    ret->pathSize = ft_lstsize(ret->roomList);
+    ret->antsInPath = 0;
+    ret->ants = NULL;
+    ret->full = false;
+    ret->color = NULL;
     return ret;
 }
 
-void    resetGraph(t_simulation **s){
-    t_graph *g = (*s)->graph;
-    t_room  *r = NULL;
-    t_list  *tmp = g->rooms;
-
-    while (tmp) {
-        r = (t_room *)tmp->content;
-        r->isSeen = NOT_SEEN;
-        r->isInqueue = 0;
-        tmp = tmp->next;
-    }
-}
-
-
-bool pathFinding(t_simulation *simu, t_room *start) {
+t_list *pathFinding(t_simulation *simu, t_room *start) {
     t_list *queue = NULL;
     t_room *current = NULL;
     t_list *poped = NULL;
-    bool    ret = false;
+    t_list *paths = NULL;
 
     start->isSeen = true;
     ft_lstadd_back(&queue, ft_lstnew(start));
@@ -68,8 +77,7 @@ bool pathFinding(t_simulation *simu, t_room *start) {
         current = (t_room *)queue->content;
         current->isSeen = SEEN;
         if (current->isEnd == true || enqueue(current, &queue) == true) {
-            ret = true;
-            ft_lstadd_back(&simu->paths, ft_lstnew(createPath(queue))); // need a better backtracking fun to get overlapping nodes
+            ft_lstadd_back(&paths, ft_lstnew(createPath(&queue, simu->graph->startRoom)));
             custom_pop(&queue, &poped);
         }
         custom_pop(&queue, &poped);
@@ -77,5 +85,5 @@ bool pathFinding(t_simulation *simu, t_room *start) {
     resetGraph(&simu);
     ft_lstclear(&queue, noFree);
     ft_lstclear(&poped, noFree);
-    return ret;
+    return paths;
 }

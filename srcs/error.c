@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:29:37 by jbettini          #+#    #+#             */
-/*   Updated: 2024/03/24 08:07:04 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/06 10:25:20 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 int    invalidNumOfArg(void) {
     ft_putstr("Invalid number of argument\n");
+    return ERROR;
+}
+int     dataEnoughError(void) {
+    ft_putstr("Data not enough to launch the simulation\n");
     return ERROR;
 }
 
@@ -53,6 +57,7 @@ int     linkAlreadyExists(char *badLine) {
 }
 
 void    handleErrorWithoutStr(int (*fun)(void)) {
+    ft_putstr(TXT_RED);
     fun();
     // Maybe need to add cleaning simu here 
     // system("leaks lem-in");
@@ -60,6 +65,7 @@ void    handleErrorWithoutStr(int (*fun)(void)) {
 }
 
 void    handleErrorWithStr(char *line, int (*fun)(char *)) {
+    ft_putstr(TXT_RED);
     fun(line);
     safeFree(line);
     // Maybe need to add cleaning simu here 

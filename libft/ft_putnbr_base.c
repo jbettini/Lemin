@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbettini <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 17:56:13 by jbettini          #+#    #+#             */
-/*   Updated: 2021/06/22 18:04:00 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/06 10:34:48 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include<unistd.h>
 
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
+#include "libft.h"
 
 void	ft_putbase(long nb, char *base)
 {
@@ -58,7 +49,7 @@ int	check_base(char *str)
 void	ft_putnbr_base(int nbr, char *base)
 {
 	int		i;
-	long	nb;
+	size_t	nb;
 
 	i = 0;
 	nb = nbr;

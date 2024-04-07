@@ -43,6 +43,13 @@ typedef struct s_time
 }				t_time;
 
 t_time	t;
+typedef struct s_color{
+	int a;
+    int r;
+    int g;
+    int b;
+}               t_color;
+
 
 # ifndef MAX_FD
 #  define MAX_FD 255
@@ -154,6 +161,8 @@ void			noFree(void *null);
 t_list  		*ft_lstnew_prev(void *content, t_list *prev);
 void    		startTimer(void);
 void    		stopTimer(void);
+t_color 		*getRandomColor(void);
+void    		setRandomizer();
 
 
 

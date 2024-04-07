@@ -1,10 +1,42 @@
-code backtracking function
-code distributed function
-code ants move visualizing
 
 
-code heuristic function
-Fix visualizer segfault
 
-chekc if is enought data 
-if map empty visu segfault
+Visualizer                      100% done
+
+graph                           100%
+antsMove                        100%
+
+
+
+
+Algorithms                      80% done
+
+parsing             100%
+pathfinding         100%
+backtracking        100%
+distributions       100%
+heuristic           0%
+
+
+
+
+
+RoadMap
+
+heuristic
+        implement add augmenting
+            implement heuristic calculation
+                implement create flow pathfinding
+                    implement sort by shortest
+                        implement difference between flow and fastness
+
+
+
+
+FixAndFeatures
+
+
+add comment color command for visualizer
+fix if leaks
+hard test parsing
+implement clean all

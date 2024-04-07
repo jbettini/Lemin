@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 19:17:50 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/02 04:06:23 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/06 10:42:38 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void    handleLink(char *str, t_simulation **simu) {
         handleErrorWithStr(str, linkAlreadyExists);
     ft_lstadd_back(&r1->neigh, ft_lstnew(r2));
     ft_lstadd_back(&r2->neigh, ft_lstnew(r1));
+    r1->neighSize++;
+    r2->neighSize++;
     freeTab(args);
 }
 
@@ -39,27 +41,28 @@ t_simulation    *parseStdin() {
     while ((line = get_next_line(0))) {
         line = ft_strdup_except(line, '\n');
         ft_putendl(line);
-        if (isNullOrEmpty(line))// Check if the current line is empty or null
+        if (isNullOrEmpty(line))
             break ;
-        if (isComment(line)) {        // skip comment 
+        if (isComment(line)) {   
+            free(line);
             continue ;
-        } else if (onlyDigitStr(line)) {
+        } else if (isPositiveNumber(line)) {
             if (step == 0) {
                 simu->ants = ft_atoi(line);
                 step = 1;
             }
             else
-                handleErrorWithStr(line, badInputFile); //Need to clean ALL before exit                
-        } else if (isInstruction(line)) {  
+                handleErrorWithStr(line, badInputFile);               
+        } else if (isInstruction(line)) {
             if (step == 1) {
                 char *nextLine = get_next_line(0);
                 t_room  *r = roomConstructor(nextLine);
-                bool    validName = nameIsValid(r->name, simu->roomsNames);
+                bool    validName = nameIsValid(r, simu->roomsNames);
                 bool    validPos = posIsValid(r, simu->graph->rooms);
                 if (validName == false || validPos == false) {
                     free(line);
                     free(r);
-                    handleErrorWithStr(nextLine, badRoomSettings); //Need to clean ALL before exit
+                    handleErrorWithStr(nextLine, badRoomSettings);
                 } else {
                     if (isStart(line) && (!(simu->graph->startRoom))) {
                         r->isStart = true;  
@@ -69,7 +72,7 @@ t_simulation    *parseStdin() {
                         simu->graph->endRoom = r;
                     } else {
                         free(nextLine);
-                        handleErrorWithStr(line , badInstruction); //Need to clean ALL before exit
+                        handleErrorWithStr(line , badInstruction);
                     }
                     ft_lstadd_back(&simu->roomsNames, ft_lstnew(ft_strdup(r->name)));
                     ft_lstadd_back(&simu->graph->rooms, ft_lstnew(r));
@@ -78,29 +81,31 @@ t_simulation    *parseStdin() {
                     free(nextLine);
                 }
             } else
-                handleErrorWithStr(line, badInputFile); //Need to clean ALL before exit
+                handleErrorWithStr(line, badInputFile);
         } 
         else if (isRoom(line)) {
             if (step == 1) {
                 t_room *r = roomConstructor(line);
-                bool    validName = nameIsValid(r->name, simu->roomsNames);
+                bool    validName = nameIsValid(r, simu->roomsNames);
                 bool    validPos = posIsValid(r, simu->graph->rooms);
                 if (validName == false || validPos == false)
-                    handleErrorWithStr(line, badRoomSettings); //Need to clean ALL before exit
+                    handleErrorWithStr(line, badRoomSettings);
                 ft_lstadd_back(&simu->graph->rooms, ft_lstnew(r));
                 ft_lstadd_back(&simu->roomsNames, ft_lstnew(ft_strdup(r->name)));
                 simu->graph->numRooms++;
-            } else 
-                handleErrorWithStr(line, badInputFile); //Need to clean ALL before exit
+            } else
+                handleErrorWithStr(line, badInputFile);
         } 
         else if (isLink(line)) {
             step = 2;
             handleLink(line, &simu);
         } 
-        else
-            handleErrorWithStr(line, badInputFile); //Need to clean ALL before exit
+        else {
+            free(line);
+            break ;
+        }
         free(line);
     }
-    // check if simu is enought to load
+    ft_putendl("");
     return simu;
 }
