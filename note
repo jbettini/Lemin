@@ -15,7 +15,7 @@ parsing             100%
 pathfinding         100%
 backtracking        100%
 distributions       100%
-heuristic           0%
+heuristic           20%
 
 
 
@@ -24,11 +24,11 @@ heuristic           0%
 RoadMap
 
 heuristic
-        implement add augmenting
             implement heuristic calculation
-                implement create flow pathfinding
-                    implement sort by shortest
-                        implement difference between flow and fastness
+                implmente sort by heuristic             // fun commune qui prend un pointeur sur fonction pour comparer
+                implement sort by shortest
+                        implement create flow pathfinding
+                            implement difference between flow and fastness
 
 
 

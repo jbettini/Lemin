@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:22:29 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/08 00:08:58 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:58:37 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 
 #define H 800
 #define W 1200
-#define SPEED 0.006
 
 
 typedef struct s_pos {

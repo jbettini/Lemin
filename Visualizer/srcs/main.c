@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 01:16:22 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/08 01:37:56 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:44:52 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ int main(int ac, char**av) {
             return dataEnoughError();
         simu->visu = true;
         createSolution(simu);
-        
         assignColor(simu->bestPath);
         handleAnts(simu->bestPath, simu);
-        
         drawGraph(simu, simu->graph->startRoom->posX, simu->graph->startRoom->posY, &v);
+        
         while (v.run) {
             if (SDL_PollEvent(&v.event)) {
                 switch (v.event.type) {

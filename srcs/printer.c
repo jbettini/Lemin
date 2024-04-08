@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:44:47 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/07 22:59:35 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/08 07:16:38 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,13 @@ void	printPaths(t_list	*paths) {
 
 void	printAllPaths(t_list	*allPaths) {
 	colorPrint(TXT_MAGENTA, "\n---------\nALL Paths : \n");
+	printDataInt("number of node: ", ft_lstsize(allPaths));
+	ft_putendl("-------------\n\n");
+	
 	int i = 1;
 	while (allPaths) {
 		printDataInt("Node number : ", i++);
+		printDataInt("path by node : ", ft_lstsize(allPaths->content));
 		printPaths(allPaths->content);
 		allPaths = allPaths->next;
 	}

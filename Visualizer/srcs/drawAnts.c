@@ -10,8 +10,9 @@ bool closeToRoom(t_ant *a) {
 }
 
 bool updateAntPosition(t_ant *ant) {
-    ant->posX += ant->distX * SPEED;
-    ant->posY += ant->distY * SPEED;
+    ant->posX += ant->distX * v.antSpeed;
+    ant->posY += ant->distY * v.antSpeed;
+    
     return closeToRoom(ant);
 }
 
