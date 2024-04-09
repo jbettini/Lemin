@@ -72,7 +72,6 @@ void    drawAnts(t_list *queue, t_visu *v) {
 }
 
 void drawGraph(t_simulation *simu, int centerX, int centerY, t_visu *v) {
-    printf("%lf", v->antSpeed);
     handleZoom(centerX, centerY, v);
     drawLink(simu->graph->rooms, v);
     handleAntsPosition(simu->antsQueue, v);

@@ -58,15 +58,68 @@ t_list  *findAugmentedPath(t_list *paths) {
     return ret;
 }
 
-void    initPbNodesSubset(t_list **allPaths) {
+t_list  *getMultiRoom(t_list *rooms) {
+    t_list  *ret = NULL;
+    t_room  *r = NULL;
+    while (rooms) {
+        r = rooms->content;
+        if (ft_lstsize(r->neigh) > 2)
+            ft_lstadd_back(&ret, ft_lstnew(r));
+        rooms = rooms->next;
+    }
+    return ret;
+}
+
+bool    isSameRoom(t_room *r1, t_room *r2) {
+    if (ft_strequ(r1->name, r2->name))
+        return true;
+    return false;
+}
+
+void    updateUniqueMultiRoom(t_list *multiRooms, t_list **multiUnique) {
+    bool    isPresent = false;
+    t_list *unique = *multiUnique;
+    while (multiRooms) {
+        isPresent = false;
+        while (unique) {
+            if (isSameRoom(multiRooms->content, unique->content)) {
+                isPresent = true;
+                break ;
+            }
+            unique = unique->next;
+        }
+        if (isPresent == false)
+            ft_lstadd_back(multiUnique, ft_lstnew(multiRooms->content));
+        multiRooms = multiRooms->next;
+    }
+}
+
+void    increaseMultiNode(t_list *l) {
+    t_room *r = NULL;
+    while (l) {
+        r = l->content;
+        r->usedInPath++;
+        l = l->next;
+    }
+}
+
+void    subsetsMultiRoom(t_list **allPaths) {
     t_list  *all = *allPaths;
     t_list  *subset = NULL;
-    // t_path  *path = NULL;
+    t_path  *path = NULL;
+    t_list  *multiRoom = NULL;
+    t_list  *uniqueMultiRoom = NULL;
     while (all) {
         subset = all->content;
         while (subset) {
-            subset= subset->next;
+            path = subset->content;
+            multiRoom = getMultiRoom(path->roomList);
+            updateUniqueMultiRoom(multiRoom, &uniqueMultiRoom);
+            ft_lstclear(&multiRoom, noFree);
+            subset = subset->next;
         }
+        increaseMultiNode(uniqueMultiRoom);
+        ft_lstclear(&uniqueMultiRoom, noFree);
         all = all->next;
     }
 }
@@ -84,10 +137,14 @@ void    createSolution(t_simulation *simu) {
         ft_lstadd_back(&simu->allPaths, ft_lstnew(pathFinding(simu, tmp->content)));
         tmp = tmp->next;
     }
-    // compter le nombre de multiroom en incrementant de 1 par sous ensemble de paths puis init pbnode
     resetEverything(simu);
+    subsetsMultiRoom(&(simu->allPaths));
     initProblematicNodes(&(simu->allPaths));
-    // printAllPaths(simu->allPaths);
+
+    // calcul heuristic
+
+    // sort avec un pointeur sur fonction qui est la fonction de comparéison
+
     // printf("\n=======================\n=======================\n");
     // printPaths(faster);
     // exit(0);
@@ -95,7 +152,5 @@ void    createSolution(t_simulation *simu) {
     // choose between fasteness and flow
 
 
-    // printPaths(faster);
     simu->bestPath = faster;
-    // simu->fasterPath = findAugmentedPath(faster);
 }

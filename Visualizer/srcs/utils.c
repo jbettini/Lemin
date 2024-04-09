@@ -70,7 +70,7 @@ void    initVisu(t_visu *v) {
 
     v->readyToEnqueue = true;
     
-    v->antSpeed = 0.0025;
+    v->antSpeed = 0.007;
     v->zoom.zoom = false;
     v->zoom.dezoom = false;
     v->zoom.Factor = 60.0;
