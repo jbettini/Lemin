@@ -17,6 +17,7 @@
 #include "../../srcs/lemIn.h"
 #include <SDL2/SDL.h>
 #include <math.h>
+#include <signal.h>
 
 #define H 800
 #define W 1200
@@ -55,7 +56,7 @@ typedef struct  s_visu
 }               t_visu;
 
 
-t_visu v;
+extern t_visu v;
 
 void handle_sigint(int sig);
 void error_sdl(char *str);
@@ -66,6 +67,7 @@ void initPos(int x, int y, t_pos *pos);
 void initFPos(int x, int y, t_fpos *pos);
 void initVisu(t_visu *v);
 void drawGraph(t_simulation *simu, int centerX, int centerY, t_visu *v);
+void handleColors(t_simulation *simu);
 void assignColor(t_list *paths);
 bool drawMove(t_ant **ant);
 void handleAntsPosition(t_list *ants, t_visu *v);

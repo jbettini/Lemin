@@ -6,10 +6,10 @@ void    handleZoom(int centerX, int centerY, t_visu *v) {
         v->offset.y = (H / 2) - (int)(centerY * v->zoom.Factor);
         v->firstDraw = true;
     }
-    else if (v->zoom.zoom || v->zoom.dezoom){
+    else if ((v->zoom.zoom && v->zoom.Factor <= 220) || (v->zoom.dezoom && v->zoom.Factor >= 1)){
         float preZoomX = (v->mouse.x - v->offset.x) / v->zoom.Factor;
         float preZoomY = (v->mouse.y - v->offset.y) / v->zoom.Factor;
-        if (v->zoom.zoom)
+        if (v->zoom.zoom )
             v->zoom.Factor *= 1.1;
         else
             v->zoom.Factor *= 0.9;
@@ -23,7 +23,7 @@ void    handleZoom(int centerX, int centerY, t_visu *v) {
 }
 
 void    drawLink(t_list *roomList, t_visu *v) {
-    SDL_SetRenderDrawColor(v->render, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(v->render, 20, 20, 20, 255);
     SDL_RenderClear(v->render);
     SDL_SetRenderDrawColor(v->render, 255, 255, 255, 255);
     while (roomList) {
@@ -45,7 +45,7 @@ void    drawLink(t_list *roomList, t_visu *v) {
 void    drawRooms(t_list *roomList, t_visu *v) {
     t_list  *tmp = roomList;
     
-    if (v->zoom.Factor > 15) {
+    if (v->zoom.Factor > 1) {
         while (tmp) {
             t_room *currentRoom = (t_room *)tmp->content;
             t_color color = getBlueColor();
@@ -61,7 +61,7 @@ void    drawRooms(t_list *roomList, t_visu *v) {
 }
 
 void    drawAnts(t_list *queue, t_visu *v) {
-    if (v->zoom.Factor > 20) {
+    if (v->zoom.Factor > 1) {
         while (queue) {
             t_ant *currentAnt = (t_ant *)queue->content;
             drawFilledCircle(v->render, (currentAnt->posX * v->zoom.Factor) + v->offset.x, \
@@ -74,7 +74,8 @@ void    drawAnts(t_list *queue, t_visu *v) {
 void drawGraph(t_simulation *simu, int centerX, int centerY, t_visu *v) {
     handleZoom(centerX, centerY, v);
     drawLink(simu->graph->rooms, v);
-    handleAntsPosition(simu->antsQueue, v);
+    if (v->stop)
+        handleAntsPosition(simu->antsQueue, v);
     drawAnts(v->queue, v);
     drawRooms(simu->graph->rooms, v);
     SDL_RenderPresent(v->render);

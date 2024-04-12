@@ -48,14 +48,17 @@ void	printPath(t_path *path) {
 	colorPrint(TXT_RED, "\n-------------------------------\n");
 	printDataStr("Unique : ", path->unique ? "true" : "false");
 	printDataInt("Path Size : ", path->pathSize);
-	colorPrint(TXT_YELLOW, "Rooms :\n");
+	printDataFloat("Heuristic : ", path->heuristic);
+	printDataInt("num of pb nodes : ", path->numsOfPbRooms);
 	printRoomsName(path->multiRoom, "Multi Room : ");
 	printRoomsName(path->problematicRoom, "Problematic Room : ");
-	t_list	*tmp = path->roomList;
-	while (tmp) {
-		printRoom(tmp->content);
-		tmp = tmp->next;
-	}
+	printDataInt("Total Weigh : ", path->totalWeigh);
+	// colorPrint(TXT_YELLOW, "Rooms :\n");
+	// t_list	*tmp = path->roomList;
+	// while (tmp) {
+	// 	printRoom(tmp->content);
+	// 	tmp = tmp->next;
+	// }
 	colorPrint(TXT_RED, "\n-------------------------------\n");
 }
 
@@ -98,12 +101,12 @@ void	printAntsInPath(t_list	*paths) {
 }
 
 void	printPaths(t_list	*paths) {
-	colorPrint(TXT_MAGENTA, "\n---------\nPaths : \n");
+	colorPrint(TXT_MAGENTA, "\n-----------------------------------------------------------------------------------------\nPaths : \n");
 	while (paths) {
 		printPath(paths->content);
 		paths = paths->next;
 	}
-	colorPrint(TXT_MAGENTA, "\n--------------------\n");
+	colorPrint(TXT_MAGENTA, "\n----------------------------------------------------------------------------------------\n");
 }
 
 void	printAllPaths(t_list	*allPaths) {
@@ -120,6 +123,7 @@ void	printAllPaths(t_list	*allPaths) {
 	}
 	colorPrint(TXT_MAGENTA, "\n--------------------\n");
 }
+
 
 void	colorPrint(char *color, char *str){
 	printf("%s%s%s", color, str, FANCY_RESET);
@@ -190,6 +194,16 @@ void	printGraph(t_graph *g) {
 	t_list	*r = g->rooms;
 	while (r) {
 		printRoom(r->content);
+		r = r->next;
+	}
+}
+void	printSpecificRoom(t_graph *g, char *n) {
+	colorPrint(TXT_MAGENTA, "\n-----\nGraph : \n");
+	printDataInt("Number of Rooms : ", g->numRooms);
+	t_list	*r = g->rooms;
+	while (r) {
+		if (ft_strequ(((t_room *)r->content)->name, n))
+			printRoom(r->content);
 		r = r->next;
 	}
 }

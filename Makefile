@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror -g
+CFLAGS		=	-Wall -Wextra -Werror -g -fPIE -O
 RM 			= 	rm -f
 NAME		=	lem-in
 SRC			=	$(wildcard srcs/*.c) 

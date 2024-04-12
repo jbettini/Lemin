@@ -61,7 +61,6 @@ void    handleAntsPosition(t_list   *ants, t_visu *v) {
     t_list  *tmp = ants;
     t_ant   *ant = NULL;
 
-    // enqueue next ants
     if (v->readyToEnqueue == true) {
         v->readyToEnqueue = false;
         while (tmp) {
@@ -89,8 +88,6 @@ void    handleAntsPosition(t_list   *ants, t_visu *v) {
         }
         
     }
-
-
     while ((v->queue)) {
         ant = (v->queue)->content;
         if (ant->moved == true)
@@ -100,9 +97,5 @@ void    handleAntsPosition(t_list   *ants, t_visu *v) {
         else 
             headToBack(&(v->queue));
     }
-
-    // printf("________________\n");
-    // printAntsInList(v->queue);
-    // printf("________________\n");
     resetLoop(v);
 }

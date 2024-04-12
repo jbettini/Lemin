@@ -10,6 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
+# > /dev/null 2>&1
 NAME = libft.a
 
 SRCS = ${wildcard *.c}
@@ -19,7 +20,7 @@ OBJS = ${SRCS:.c=.o}
 CC = clang
 RM = rm -f
 AR = ar rcs
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g -fPIE 
 
 TXT_RED = "\033[1;31m"
 TXT_GREEN = "\033[1;32m"
@@ -35,7 +36,7 @@ FANCY_RESET = "\033[0m"
 ${NAME}: ${OBJS}
 	@echo $(TXT_GREEN)
 	@echo "Création de l'archive ${NAME} ..."
-	@${AR} ${NAME} ${OBJS} > /dev/null 2>&1
+	@${AR} ${NAME} ${OBJS} 
 	@echo "Archive ${NAME} crée."
 	@echo $(FANCY_RESET)
 

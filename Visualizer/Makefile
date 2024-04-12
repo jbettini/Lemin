@@ -10,14 +10,17 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = clang
-CFLAGS = -Wall -Wextra -Werror -g `sdl2-config --cflags`
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -g -O -fPIE -pie `sdl2-config --cflags` 
 LFLAGS = `sdl2-config --libs`
+
 RM = rm -f
 NAME = Visu-hex
 SRC_DIR := ../srcs
+
 M_SRC := $(filter-out $(SRC_DIR)/main.c, $(wildcard $(SRC_DIR)/*.c))
 B_SRC = $(wildcard srcs/*.c)
+
 SRC = $(B_SRC) $(M_SRC)
 OBJ = $(SRC:.c=.o)
 LIBFT_DIR = ../libft

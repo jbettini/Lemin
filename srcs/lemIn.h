@@ -44,6 +44,7 @@ typedef struct  s_simulation
     t_list  *roomsNames;
     t_list  *allPaths;
     t_list  *fasterPath;
+    t_list  *hPath;
     t_list  *bestPath;
     t_list  *antsQueue;
 }               t_simulation;
@@ -61,11 +62,13 @@ typedef struct  s_path
         int     antsInPath;
         t_list  *ants;
         bool    full;
+        bool    sorted;
         t_color *color;
         
     
     // after all
-		int		heuristic;
+		float		heuristic;
+        float       totalWeigh;
 }               t_path;
 
 typedef struct  s_ant
@@ -165,6 +168,7 @@ void	printAntsInPath(t_list	*paths);
 void    printAntsInList(t_list  *ants);
 void	printAnt(t_ant *a);
 void	printDataFloat(char *prefix, float data);
+void	printSpecificRoom(t_graph *g, char *n);
 
 // // utils
 t_room  *getRoomWithName(char *str, t_list **rooms);

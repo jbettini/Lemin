@@ -42,7 +42,8 @@ typedef struct s_time
 	clock_t debut, fin;
 }				t_time;
 
-t_time	t;
+extern t_time t;
+
 typedef struct s_color{
 	int a;
     int r;

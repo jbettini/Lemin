@@ -29,10 +29,11 @@ void    resetSeen(t_simulation **simu){
 }
 
 void drawThickLine(SDL_Renderer *renderer, int x1, int y1, int x2, int y2) {
-    for (int i = 0 ; i <= 4; i++) {
-        SDL_RenderDrawLine(renderer, x1 + i, y1, x2 + i, y2);
-        SDL_RenderDrawLine(renderer, x1, y1 + i, x2, y2 + i);
-    }
+    if ((x1 >= 0 && x1 < W && y1 >= 0 && y1 < H) || (x2 >= 0 && x2 < W && y2 >= 0 && y2 < H))
+        for (int i = 0 ; i <= (int)(4 * (v.zoom.Factor / 60 )); i++) {
+            SDL_RenderDrawLine(renderer, x1 + i, y1, x2 + i, y2);
+            SDL_RenderDrawLine(renderer, x1, y1 + i, x2, y2 + i);
+        }
 }
 
 void drawFilledCircle(SDL_Renderer *renderer, int centerX, int centerY, float radius, t_color color) {
@@ -41,7 +42,8 @@ void drawFilledCircle(SDL_Renderer *renderer, int centerX, int centerY, float ra
     for (int y = -radius; y <= radius; y++) {
         for (int x = -radius; x <= radius; x++) {
             if (x * x + y * y <= radius * radius)
-                SDL_RenderDrawPoint(renderer, centerX + x, centerY + y);
+                if (centerX + x >= 0 && centerX + x < W && centerY + y >= 0 && centerY + y < H)
+                    SDL_RenderDrawPoint(renderer, centerX + x, centerY + y);
         }
     }
 }
@@ -65,7 +67,7 @@ void    initVisu(t_visu *v) {
     if (!v->render)
         error_sdl("CreateRenderer failed");
     v->run = true;
-    v->stop = false;
+    v->stop = true;
     v->firstDraw = false;
 
     v->readyToEnqueue = true;

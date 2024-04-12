@@ -32,6 +32,7 @@ t_color getBlueColor(){
     color.a = 255;
     color.r = 40;
     color.g = 121;
-    color.b = 204;
+    color.b = 190;
     return color;
 }
+

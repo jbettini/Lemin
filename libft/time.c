@@ -12,6 +12,8 @@
 
 #include "libft.h"
 
+t_time t;
+
 void    startTimer(void) {
     t.debut = clock();
 }

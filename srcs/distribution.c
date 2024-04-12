@@ -100,7 +100,6 @@ void    handleAnts(t_list   *paths, t_simulation *s) {
     int         totalAnts = s->ants;
     t_list      *tmp = NULL;
     t_path      *currentPath = NULL;
-    
     while (totalAnts > 0) {
         tmp = paths;
         currentPath = (t_path *)paths->content;
@@ -112,6 +111,7 @@ void    handleAnts(t_list   *paths, t_simulation *s) {
             return ;
         }
         while (tmp) {
+
             currentPath = (t_path *)tmp->content;
             if (currentPath->pathSize == nextSize)
                 break ;
@@ -122,6 +122,7 @@ void    handleAnts(t_list   *paths, t_simulation *s) {
             tmp = tmp->next;
         }
     }
+    s->antsQueue = setQueueAnts(s->bestPath);
 }
 
 void    printMove(t_ant *ant){
@@ -169,6 +170,7 @@ void    antsMoving(t_list   *ants) {
     t_list  *tmp = ants;
     t_list  *queue = NULL;
     t_ant   *ant = NULL;
+    int     numOfLine = 0;
     do
     {
         while (tmp) {
@@ -189,5 +191,11 @@ void    antsMoving(t_list   *ants) {
                 headToBack(&queue);
         }
         resetForLoop(queue);
+        numOfLine++;
     } while (ft_lstsize(queue) > 0);
+    ft_putendl(FANCY_RESET);
+    ft_putstr(TXT_GREEN);
+    ft_putstr("Solved in : ");
+    ft_putnbr(numOfLine);
+    ft_putendl(FANCY_RESET);
 }

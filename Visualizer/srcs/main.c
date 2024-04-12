@@ -12,6 +12,8 @@
 
 #include "visualizer.h"
 
+t_visu v;
+
 int main(int ac, char**av) {
     (void)av;
     (void)ac;
@@ -29,6 +31,7 @@ int main(int ac, char**av) {
             return dataEnoughError();
         simu->visu = true;
         createSolution(simu);
+        // handleColors(simu);
         assignColor(simu->bestPath);
         handleAnts(simu->bestPath, simu);
         drawGraph(simu, simu->graph->startRoom->posX, simu->graph->startRoom->posY, &v);
@@ -64,6 +67,17 @@ int main(int ac, char**av) {
                                 break;
                             case SDLK_RIGHT:
                                 v.offset.x -= 10;
+                                break;
+                            case SDLK_SPACE:
+                                v.stop = !v.stop;
+                                break;
+                            case SDLK_w:
+                                if (v.antSpeed <= 0.04)
+                                    v.antSpeed += 0.001;
+                                break;
+                            case SDLK_s:
+                                if (v.antSpeed > 0.001)
+                                    v.antSpeed -= 0.001;
                                 break;
                         }
                         break;

@@ -9,34 +9,27 @@ antsMove                        100%
 
 
 
-Algorithms                      80% done
+Algorithms                      100% done
 
 parsing             100%
 pathfinding         100%
 backtracking        100%
 distributions       100%
-heuristic           20%
+heuristic           100%            implement choose between flow and fasteness
 
 
 
 
-
-RoadMap
-
-heuristic
-            implement heuristic calculation
-                implmente sort by heuristic             // fun commune qui prend un pointeur sur fonction pour comparer
-                implement sort by shortest
-                        implement create flow pathfinding
-                            implement difference between flow and fastness
-
-
-
-
-FixAndFeatures
-
+Features
 
 add comment color command for visualizer
+    allrooms color
+        background color
+
+
+Fix
+
+Very bad heuristic need to implement select unique path
 fix if leaks
-hard test parsing
 implement clean all
+hard test parsing and Algorithms

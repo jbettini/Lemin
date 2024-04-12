@@ -62,6 +62,8 @@ t_path  *createPath(t_list **queue, t_room *start){
     ret->ants = NULL;
     ret->full = false;
     ret->color = NULL;
+    ret->sorted = false;
+    ret->totalWeigh = 1.0;
     return ret;
 }
 

@@ -21,16 +21,7 @@ int main (int ac, char **av) {
     if (isIncompleteSimulation(simu))
         handleErrorWithoutStr(dataEnoughError);
     simu->visu = false;
-    // // Find the fastest path
     createSolution(simu);
-
-    
-    //     //   Find all path possible
-
-    
-    
-    //Solution
-    
     handleAnts(simu->bestPath, simu);
     antsMoving(simu->antsQueue);
     stopTimer();

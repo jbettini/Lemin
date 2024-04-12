@@ -43,17 +43,48 @@ bool    isAugmentedPath(t_path *p, t_list *paths) {
     return true;
 }
 
-t_list  *findAugmentedPath(t_list *paths) {
-    t_list *tmp = NULL;
-    t_list *ret = NULL;
+bool    roomIsUsed(t_list *paths, char *name) {
+    t_path *tmp = NULL;
+    t_room  *r = NULL;
+    t_list  *rList = NULL;
     while (paths) {
         tmp = paths->content;
-        while (tmp) {
-            if (isAugmentedPath(tmp->content, ret))
-                ft_lstadd_back(&ret, ft_lstnew(tmp->content));
-            tmp = tmp->next;
+        rList = tmp->roomList;
+        while (rList) {
+            r = rList->content;
+            if (ft_strequ(r->name, name)) {
+                printf("%s : %s\n", r->name, name);
+                return false;
+            }
+            rList = rList->next;
         }
         paths = paths->next;
+    }
+    return true;
+}
+
+// bool    isAugmentedPath(t_path *p, t_list *paths) {
+
+//     if (p->unique)
+//         return true;
+//     t_list  *rList = p->roomList;
+//     t_room  *r = NULL;
+//     while (rList) {
+//         r = rList->content;
+//         if (roomIsUsed(paths, r->name))
+//             return false;
+//         rList = rList->next;
+//     }
+//     return true;
+// }
+
+t_list  *findAugmentedPath(t_list *paths) {
+    t_list *tmp = paths;
+    t_list *ret = NULL;
+    while (tmp) {
+        if (isAugmentedPath(tmp->content, ret))
+            ft_lstadd_back(&ret, ft_lstnew(tmp->content));
+        tmp = tmp->next;
     }
     return ret;
 }
@@ -123,6 +154,116 @@ void    subsetsMultiRoom(t_list **allPaths) {
         all = all->next;
     }
 }
+t_list  *sortS(t_list   *unsorted) {
+    t_path  *p = NULL;
+    t_list  *ret = NULL;
+    t_list  *tmp = NULL;
+    t_path  *ptmp = NULL;
+    do
+    {
+        p = NULL;
+        ptmp = NULL;
+        tmp = unsorted;
+        while (tmp) {
+            ptmp = tmp->content;
+            if (ptmp->sorted == false) {
+                if (p == NULL)
+                    p = ptmp;
+                else if (p->pathSize > ptmp->pathSize)
+                    p = ptmp;
+            }
+            tmp = tmp->next;
+        }
+        if (p) {
+            p->sorted = true;
+            ft_lstadd_back(&ret, ft_lstnew(p));
+        }
+    } while (p);
+    return ret;
+}
+
+void    resetSorted(t_list **l) {
+    t_list  *tmp = *l;
+    t_path  *p = NULL;
+
+    while (tmp) {
+        p = tmp->content;
+        p->sorted = false;
+        tmp = tmp->next;
+    }
+}
+
+t_list  *sortH(t_list   *unsorted) {
+    t_path  *p = NULL;
+    t_list  *ret = NULL;
+    t_list  *tmp = NULL;
+    t_path  *ptmp = NULL;
+    do
+    {
+        p = NULL;
+        ptmp = NULL;
+        tmp = unsorted;
+        while (tmp) {
+            ptmp = tmp->content;
+            if (ptmp->sorted == false) {
+                if (p == NULL)
+                    p = ptmp;
+                else if (p->heuristic == ptmp->heuristic && p->pathSize > ptmp->pathSize)
+                    p = ptmp;
+                else if (p->heuristic < ptmp->heuristic)
+                    p = ptmp;
+            }
+            tmp = tmp->next;
+        }
+        if (p) {
+            p->sorted = true;
+            ft_lstadd_back(&ret, ft_lstnew(p));
+        }
+    } while (p);
+    resetSorted(&ret);
+    return ret;
+}
+
+t_list            *createHPath(t_simulation *s){
+    t_list  *paths = s->allPaths;
+    t_list  *path = NULL;
+    t_path  *tmp = NULL;
+    t_path  *bestH = NULL;
+    t_list  *unsorted = NULL;
+    t_list  *sorted = NULL;
+    t_list  *aPaths = NULL;
+    t_list  *ret = NULL;
+    while (paths) {
+        if (paths->content == NULL || ft_lstsize(paths->content) <= 0) {
+            paths = paths->next;
+            continue;
+        }
+        path = (t_list *)paths->content;
+        bestH = NULL;
+        while (path) {
+            tmp = (t_path *)path->content;
+            if (tmp->unique) {
+                bestH = tmp;
+                break;
+            }
+            else if(bestH == NULL || bestH->heuristic < tmp->heuristic)
+                bestH = tmp;
+            path = path->next;
+        }
+        ft_lstadd_back(&unsorted, ft_lstnew(bestH));
+        paths = paths->next;
+    }
+    sorted = sortH(unsorted);
+    aPaths = findAugmentedPath(sorted);
+    // printPaths(aPaths);
+    // printSpecificRoom(s->graph, "Fuw2");
+    // exit(0);
+    ret = sortS(aPaths);
+    ft_lstclear(&sorted, noFree);
+    ft_lstclear(&unsorted, noFree);
+    ft_lstclear(&aPaths, noFree);
+    return ret;
+}
 
 void    createSolution(t_simulation *simu) {
     
@@ -130,7 +271,7 @@ void    createSolution(t_simulation *simu) {
     initProblematicNodes(&(simu->fasterPath));
     if (simu->ants <= 0 || ft_lstsize(simu->fasterPath) == 0)
         handleErrorWithoutStr(dataEnoughError);
-    t_list  *faster = findAugmentedPath(simu->fasterPath);
+    t_list  *faster = findAugmentedPath(simu->fasterPath->content);
     t_list *tmp = simu->graph->startRoom->neigh;
     while (tmp) {
         simu->graph->startRoom->isSeen = SEEN;
@@ -140,17 +281,16 @@ void    createSolution(t_simulation *simu) {
     resetEverything(simu);
     subsetsMultiRoom(&(simu->allPaths));
     initProblematicNodes(&(simu->allPaths));
-
-    // calcul heuristic
-
-    // sort avec un pointeur sur fonction qui est la fonction de comparéison
-
-    // printf("\n=======================\n=======================\n");
     // printPaths(faster);
-    // exit(0);
-    
-    // choose between fasteness and flow
-
-
-    simu->bestPath = faster;
+    t_list  *flow = createHPath(simu);
+    printPaths(flow);
+    printPaths(faster);
+    simu->bestPath = flow;
+    // simu->bestPath = faster;
+    ft_lstclear(&faster, noFree);
+    if (ft_lstsize(faster) >= ft_lstsize(flow) || simu->ants <= ft_lstsize(faster)) {
+        simu->bestPath = faster;
+        ft_lstclear(&flow, noFree);
+    } else
+        ft_lstclear(&faster, noFree);
 }
