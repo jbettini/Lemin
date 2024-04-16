@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:30:19 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/07 23:28:47 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/16 02:05:21 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void    resetForLoop(t_list *queue){
         ant->moved = false;
         tmp = tmp->next;
     }
-    ft_putstr("\n");
+    // ft_putstr("\n");
 }
 
 void    headToBack(t_list   **list) {
@@ -160,7 +160,7 @@ bool    moveForward(t_ant **ant) {
     (*ant)->moved = true;
     (*ant)->path->full = false;
     (*ant)->roomList = (*ant)->roomList->next;
-    printMove(*ant);
+    // printMove(*ant);
     if ((*ant)->roomList->next == NULL)
         return true;
     return false;

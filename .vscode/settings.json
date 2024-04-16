@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "visualizer.h": "c"
+        "visualizer.h": "c",
+        "lemin.h": "c"
     }
 }

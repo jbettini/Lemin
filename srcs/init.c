@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 19:18:31 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/08 01:29:07 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:41:28 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_simulation    *getEmptySimulation(void) {
     simu->roomsNames = NULL;
     simu->allPaths = NULL;
     simu->fasterPath = NULL;
-    simu->hPath = NULL;
     simu->bestPath = NULL;
     return simu;
 }
@@ -66,7 +65,6 @@ t_room *roomConstructor(char *str) {
     if (ft_strslen(splitArg) != 3)
         return newRoom;
     else if (!isValidNum(splitArg[1]) && !isValidNum(splitArg[2]))
-    
         return newRoom;
     else {
         newRoom = malloc(sizeof(t_room));
@@ -78,6 +76,7 @@ t_room *roomConstructor(char *str) {
         newRoom->neigh = NULL;
         newRoom->isSeen = NOT_SEEN;
         newRoom->isInqueue = false;
+        newRoom->upUsed = false;
         newRoom->usedInPath = 0;
         newRoom->neighSize = 0;
     }
@@ -102,17 +101,16 @@ void            initProblematicNodes(t_list **allPaths){
                 if (roomTmp->usedInPath > 1) {
                     pbNodes++;
                     ft_lstadd_back(&tmp->problematicRoom, ft_lstnew(roomTmp));
-                    if (ft_lstsize(*allPaths) / 2 <= roomTmp->usedInPath)
-                        tmp->totalWeigh *= roomTmp->usedInPath;
-                    else
-                        tmp->totalWeigh /= roomTmp->usedInPath;
-                    // printf("JOJO : %d\n", roomTmp->usedInPath);
+                    // if (ft_lstsize(*allPaths) / 2 <= roomTmp->usedInPath)
+                    //     tmp->totalWeigh *= roomTmp->usedInPath;
+                    // else
+                    //     tmp->totalWeigh /= roomTmp->usedInPath;
                 }
                 multiNode = multiNode->next;
             }
             tmp->numsOfPbRooms = pbNodes;
-            tmp->heuristic = 1 / (tmp->pathSize + ((tmp->numsOfPbRooms + tmp->totalWeigh) * 2.0));
-            // tmp->heuristic = 1.0 / (tmp->pathSize + (tmp->totalWeigh * 2.0));
+            tmp->heuristic = 1 / (tmp->pathSize + (tmp->numsOfPbRooms * 1.5));
+            // tmp->heuristic = 1 / (tmp->pathSize + ((tmp->numsOfPbRooms + tmp->totalWeigh) * 2.0));
             if (pbNodes == 0)
                 tmp->unique = true;
             pbNodes = 0;

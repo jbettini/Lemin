@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:22:29 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/08 01:12:57 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:48:11 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct  s_room
     char    *name;
     int     isSeen;
     bool    isInqueue;
+    bool    upUsed;
+    
     int     usedInPath;         // need an update maybe
     int     neighSize;
 }				t_room;
@@ -44,7 +46,6 @@ typedef struct  s_simulation
     t_list  *roomsNames;
     t_list  *allPaths;
     t_list  *fasterPath;
-    t_list  *hPath;
     t_list  *bestPath;
     t_list  *antsQueue;
 }               t_simulation;
@@ -66,7 +67,7 @@ typedef struct  s_path
         t_color *color;
         
     
-    // after all
+    // heuristic
 		float		heuristic;
         float       totalWeigh;
 }               t_path;
@@ -109,9 +110,7 @@ t_list  *setQueueAnts(t_list *paths);
 
 // clean.c
 
-void    cleanRoom();
-void    cleanGraph();
-void    cleanSimulation();
+void    cleanSimulation(t_simulation *simulation);
 void    safeFree(void *ptr);
 void    freeTab(char **tab);
 

@@ -6,105 +6,78 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 18:27:01 by jbettini          #+#    #+#             */
-/*   Updated: 2021/10/21 16:37:18 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:27:54 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	isep(char s, char c)
+static char	*ft_strndup(char const *s, size_t n)
 {
-	if (s == c)
-		return (1);
-	else
-		return (0);
-}
-
-static size_t	word(char const *s, char c)
-{
+	char	*dest;
 	size_t	i;
-	size_t	j;
-	size_t	w;
 
-	j = 0;
 	i = 0;
-	w = 0;
-	while (s[i] && s[j])
+	dest = (char *)malloc(n + 1);
+	if (dest == NULL)
+		return (NULL);
+	while (i < n)
 	{
-		i = j;
-		while (isep(s[i], c) && s[i])
-			i++;
-		j = i;
-		while (!isep(s[j], c) && s[j])
-			j++;
-		if (j > i)
-			w++;
+		dest[i] = s[i];
+		i++;
 	}
-	return (w);
+	dest[i] = '\0';
+	return (dest);
 }
 
-static int	alloc_char(size_t len, size_t index, char **str)
+static int	ft_countwords(char *str, char set)
 {
-	str[index] = malloc(sizeof(char) * len + 1);
-	if (!str[index])
-		return (0);
-	return (1);
-}
+	int	i;
+	int	len;
 
-static char	**wordalloc(char const *s, char c)
-{
-	char	**str;
-	size_t	i;
-	size_t	j;
-	size_t	w;
-
-	w = 0;
-	j = 0;
+	len = 0;
 	i = 0;
-	str = malloc(sizeof(char *) * word(s, c) + 1);
+	if (ft_strlen(str) == 0)
+		return (0);
+	if (str[0] != set)
+		len++;
+	while (str[i])
+	{
+		if (str[i] == set)
+		{
+			if (str[i] == set && (str[i + 1] != set && str[i + 1] != '\0'))
+				len++;
+		}
+		i++;
+	}
+	return (len);
+}
+
+char	**ft_split(char const *str, char set)
+{
+	char	**tab;
+	int		i;
+	int		m_tab;
+	int		len_word;
+
+	m_tab = 0;
+	i = -1;
 	if (!str)
 		return (NULL);
-	while (s[i] && s[j])
-	{
-		i = j;
-		while (isep(s[i], c) && s[i])
-			i++;
-		j = i;
-		while (!isep(s[j], c) && s[j])
-			j++;
-		if (j > i)
-			if (!(alloc_char(j - i, w, str)))
-				return (NULL);
-		w++;
-	}
-	return (str);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char	**str;
-	size_t	i;
-	size_t	j;
-	size_t	w;
-
-	if (!s)
+	tab = ft_calloc(sizeof(tab), (ft_countwords((char *)str, set) + 1));
+	if (!tab)
 		return (NULL);
-	i = 0;
-	j = 0;
-	w = 0;
-	str = wordalloc(s, c);
-	if (!str)
-		return (NULL);
-	while (j < word(s, c))
+	while (str[++i])
 	{
-		w = 0;
-		while (isep(s[i], c) && s[i])
-			i++;
-		while (!isep(s[i], c) && s[i])
-			str[j][w++] = s[i++];
-		str[j][w] = 0;
-		j++;
+		len_word = 0;
+		if (str[i] != set)
+		{
+			while (str[i + len_word] != set && str[i + len_word] != '\0')
+				len_word++;
+			tab[m_tab++] = ft_strndup(str + i, len_word);
+			i = i + len_word - 1;
+		}
 	}
-	str[j] = 0;
-	return (str);
+	tab[m_tab] = 0;
+	return (tab);
 }

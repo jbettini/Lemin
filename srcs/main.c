@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 04:21:39 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/08 23:56:18 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:48:37 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int main (int ac, char **av) {
     handleAnts(simu->bestPath, simu);
     antsMoving(simu->antsQueue);
     stopTimer();
+    cleanSimulation(simu);
     // system("leaks lem-in");
     return 0;
 }

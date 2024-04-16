@@ -6,7 +6,7 @@
 #    By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 05:04:25 by jbettini          #+#    #+#              #
-#    Updated: 2024/03/22 23:12:01 by jbettini         ###   ########.fr        #
+#    Updated: 2024/04/16 03:11:23 by jbettini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJS = ${SRCS:.c=.o}
 CC = clang
 RM = rm -f
 AR = ar rcs
-CFLAGS = -Wall -Wextra -Werror -g -fPIE 
+CFLAGS = -Wall -Wextra -Werror -g -fPIE -O
 
 TXT_RED = "\033[1;31m"
 TXT_GREEN = "\033[1;32m"

@@ -6,12 +6,12 @@
 #    By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 05:33:19 by jbettini          #+#    #+#              #
-#    Updated: 2024/03/25 17:19:43 by jbettini         ###   ########.fr        #
+#    Updated: 2024/04/16 17:54:13 by jbettini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror -g -fPIE -O
+CFLAGS		=	-Wall -Wextra -Werror -g -fPIE -O -fsanitize=address
 RM 			= 	rm -f
 NAME		=	lem-in
 SRC			=	$(wildcard srcs/*.c) 
@@ -40,7 +40,6 @@ $(LIBFT):
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIBFT_DIR) -lft 
 
-	#-g -fsanitize=address
 clean:
 	make -C $(LIBFT_DIR) fclean
 	@printf  $(TXT_RED)"Nettoyage du projet\n"$(FANCY_RESET)
