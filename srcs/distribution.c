@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:30:19 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/16 20:09:44 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/16 20:43:07 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ void     fill(t_list *paths, int totalAnts, int currentAnt, t_simulation *s) {
             currentPath = (t_path *)tmp->content;
             currentPath->antsInPath++;
             ft_lstadd_back(&currentPath->ants , ft_lstnew(getAnt(currentAnt, &currentPath)));
-            // ft_lstadd_front(&s->antsHandled , ft_lstnew(getAnt(currentAnt, &currentPath)));
+            // ft_lstadd_back(&s->antsHandled , ft_lstnew(getAnt(currentAnt, &currentPath)));
             totalAnts--;
             currentAnt++;
             tmp = tmp->next;
         }
     }
-    if (s)
+    if(s)
         return;
 }
 
@@ -117,7 +117,6 @@ void    handleAnts(t_list   *paths, t_simulation *s) {
                 break ;
             currentPath->antsInPath++;
             ft_lstadd_back(&currentPath->ants , ft_lstnew(getAnt(currentAnt, &currentPath)));
-            // ft_lstadd_front(&s->antsHandled , ft_lstnew(getAnt(currentAnt, &currentPath)));
             totalAnts--;
             currentAnt++;
             tmp = tmp->next;

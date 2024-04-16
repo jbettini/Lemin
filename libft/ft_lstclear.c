@@ -6,16 +6,14 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:33:01 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/16 19:49:06 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/03/25 06:16:38 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 void	noFree(void *null) {
-	if (null)
-		return ;
-	return ;
+	(void)null;
 }
 
 void	ft_lstclear(t_list **alst, void (*del)(void *))
@@ -37,5 +35,4 @@ void	ft_lstclear(t_list **alst, void (*del)(void *))
 			}
 		}
 	}
-	*alst = NULL;
 }

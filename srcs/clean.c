@@ -6,25 +6,22 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 23:26:32 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/16 20:16:35 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/16 21:16:26 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemIn.h"
 
 void    cleanRoom(void *tRoom) {
-    if (tRoom == NULL)
-        return ;
     t_room *room = (t_room *)tRoom;
     ft_lstclear(&room->neigh, noFree);
+    free(room->name);
     free(room);
     room = NULL;
     tRoom = NULL;
 }
 
 void    cleanGraph(void *tGraph) {
-    if (tGraph == NULL)
-        return ;
     t_graph *graph = (t_graph *)tGraph;
     ft_lstclear(&graph->rooms, cleanRoom);
     free(graph);
@@ -32,42 +29,43 @@ void    cleanGraph(void *tGraph) {
     tGraph = NULL;
 }
 
+
+void    cleanPath(void *tPath) {
+    t_path *path = (t_path *)tPath;
+    ft_lstclear(&path->roomList, noFree);
+    ft_lstclear(&path->multiRoom, noFree);
+    ft_lstclear(&path->problematicRoom, noFree);
+    ft_lstclear(&path->ants, noFree);
+    // Maybe need to clean colors here
+    free(path);
+    path = NULL;
+    tPath = NULL;
+}
+
+void    cleanPaths(void *tPaths) {
+    t_list  *paths = (t_list *)tPaths;
+    ft_lstclear(&paths, cleanPath);
+}
+
 void    cleanAnt(void *tAnt) {
-    if (tAnt == NULL)
-        return ;
     t_ant *ant = (t_ant *)tAnt;
-    ft_lstclear(&ant->roomList, noFree);
     // Maybe need to free colors here
     free(ant);
     ant = NULL;
     tAnt = NULL;    
 }
 
-void    cleanPath(void *tPath) {
-    t_path *path = (t_path *)tPath;
-    ft_lstclear(&path->roomList, noFree);
-    ft_lstclear(&path->multiRoom, noFree);
-    // ft_lstclear(&path->problematicRoom, noFree);
-    // ft_lstclear(&path->ants, noFree);
-    // Maybe need to clean colors here
-    // free(path);
-    // path = NULL;
-    // tPath = NULL;
-}
-
 void    cleanSimulation(t_simulation *simulation) {
     cleanGraph(simulation->graph);
     ft_lstclear(&simulation->roomsNames, free);
+    ft_lstclear(&simulation->bestPath, noFree);
+    ft_lstclear(&simulation->fasterPath, cleanPaths);
+    ft_lstclear(&simulation->allPaths, cleanPaths);
 
     
-    // ft_lstclear(&simulation->fasterPath, cleanPath);
-    // ft_lstclear(&simulation->allPaths, cleanPath);
-    // ft_lstclear(&simulation->bestPath, noFree);
-    // ft_lstclear(&simulation->antsQueue, cleanAnt);
-    // free(simulation);
-    // simulation = NULL;
-    if (simulation != NULL)
-        return;
+    ft_lstclear(&simulation->antsQueue, cleanAnt);
+    free(simulation);
+    simulation = NULL;
 }
 
 

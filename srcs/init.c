@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 19:18:31 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/16 18:50:07 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:41:28 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_simulation    *getEmptySimulation(void) {
     simu->allPaths = NULL;
     simu->fasterPath = NULL;
     simu->bestPath = NULL;
-    simu->antsHandled = NULL;
     return simu;
 }
 

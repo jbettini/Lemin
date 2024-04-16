@@ -33,98 +33,76 @@ fix if leaks
 implement clean all
 hard test parsing and Algorithms
 
-Direct leak of 61632 byte(s) in 856 object(s) allocated from:
-    #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4ccb2d in getEmptyPath /home/jbettini/Desktop/Lemin/srcs/init.c:37:18
-    #2 0x4d2317 in createSolution /home/jbettini/Desktop/Lemin/srcs/solution.c:408:51
-    #3 0x4cd461 in main /home/jbettini/Desktop/Lemin/srcs/main.c:27:5
-
 Direct leak of 24100 byte(s) in 4820 object(s) allocated from:
     #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4d3831 in ft_strdup /home/jbettini/Desktop/Lemin/libft/ft_strdup.c:21:8
-    #2 0x4cd425 in main /home/jbettini/Desktop/Lemin/srcs/main.c:22:26
+    #1 0x4d3721 in ft_strdup /home/jbettini/Desktop/Lemin/libft/ft_strdup.c:21:8
+    #2 0x4cd335 in main /home/jbettini/Desktop/Lemin/srcs/main.c:20:26
 
-Direct leak of 2952 byte(s) in 41 object(s) allocated from:
+Direct leak of 48 byte(s) in 2 object(s) allocated from:
     #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4ccb2d in getEmptyPath /home/jbettini/Desktop/Lemin/srcs/init.c:37:18
-    #2 0x4d2178 in createSolution /home/jbettini/Desktop/Lemin/srcs/solution.c:400:49
-    #3 0x4cd461 in main /home/jbettini/Desktop/Lemin/srcs/main.c:27:5
-
-Direct leak of 1080 byte(s) in 45 object(s) allocated from:
-    #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4d349d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
-
-Direct leak of 912 byte(s) in 38 object(s) allocated from:
-    #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4d349d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
-    #2 0x4d2317 in createSolution /home/jbettini/Desktop/Lemin/srcs/solution.c:408:51
-    #3 0x4cd461 in main /home/jbettini/Desktop/Lemin/srcs/main.c:27:5
+    #1 0x4d338d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
+    #2 0x4cd371 in main /home/jbettini/Desktop/Lemin/srcs/main.c:24:5
 
 Direct leak of 24 byte(s) in 1 object(s) allocated from:
     #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4d349d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
-    #2 0x4cd425 in main /home/jbettini/Desktop/Lemin/srcs/main.c:22:26
+    #1 0x4d338d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
+    #2 0x4cd335 in main /home/jbettini/Desktop/Lemin/srcs/main.c:20:26
 
 Direct leak of 24 byte(s) in 1 object(s) allocated from:
     #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4d349d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
-    #2 0x4d2178 in createSolution /home/jbettini/Desktop/Lemin/srcs/solution.c:400:49
-    #3 0x4cd461 in main /home/jbettini/Desktop/Lemin/srcs/main.c:27:5
+    #1 0x4d338d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
+    #2 0x4cc002 in handleAnts /home/jbettini/Desktop/Lemin/srcs/distribution.c
+    #3 0x4cd391 in main /home/jbettini/Desktop/Lemin/srcs/main.c:25:5
 
-Direct leak of 24 byte(s) in 1 object(s) allocated from:
+Indirect leak of 2893512 byte(s) in 120563 object(s) allocated from:
     #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4d349d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
-    #2 0x4cd481 in main /home/jbettini/Desktop/Lemin/srcs/main.c:28:5
+    #1 0x4d338d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
+    #2 0x4d2227 in createSolution /home/jbettini/Desktop/Lemin/srcs/solution.c:408:51
+    #3 0x4cd371 in main /home/jbettini/Desktop/Lemin/srcs/main.c:24:5
 
-Direct leak of 24 byte(s) in 1 object(s) allocated from:
+Indirect leak of 190824 byte(s) in 7951 object(s) allocated from:
     #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4d349d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
-    #2 0x4cc0d9 in handleAnts /home/jbettini/Desktop/Lemin/srcs/distribution.c
-    #3 0x4cd481 in main /home/jbettini/Desktop/Lemin/srcs/main.c:28:5
-
-Indirect leak of 2864736 byte(s) in 119364 object(s) allocated from:
-    #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4d349d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
-    #2 0x4d2317 in createSolution /home/jbettini/Desktop/Lemin/srcs/solution.c:408:51
-    #3 0x4cd461 in main /home/jbettini/Desktop/Lemin/srcs/main.c:27:5
-
-Indirect leak of 189744 byte(s) in 7906 object(s) allocated from:
-    #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4d349d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
+    #1 0x4d338d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
 
 Indirect leak of 115656 byte(s) in 4819 object(s) allocated from:
     #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4d349d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
-    #2 0x4cd425 in main /home/jbettini/Desktop/Lemin/srcs/main.c:22:26
+    #1 0x4d338d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
+    #2 0x4cd335 in main /home/jbettini/Desktop/Lemin/srcs/main.c:20:26
 
-Indirect leak of 89424 byte(s) in 3726 object(s) allocated from:
+Indirect leak of 90528 byte(s) in 3772 object(s) allocated from:
     #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4d349d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
-    #2 0x4d2178 in createSolution /home/jbettini/Desktop/Lemin/srcs/solution.c:400:49
-    #3 0x4cd461 in main /home/jbettini/Desktop/Lemin/srcs/main.c:27:5
+    #1 0x4d338d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
+    #2 0x4d2088 in createSolution /home/jbettini/Desktop/Lemin/srcs/solution.c:400:49
+    #3 0x4cd371 in main /home/jbettini/Desktop/Lemin/srcs/main.c:24:5
+
+Indirect leak of 65088 byte(s) in 904 object(s) allocated from:
+    #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
+    #1 0x4cca3d in getEmptyPath /home/jbettini/Desktop/Lemin/srcs/init.c:36:18
+    #2 0x4d2227 in createSolution /home/jbettini/Desktop/Lemin/srcs/solution.c:408:51
+    #3 0x4cd371 in main /home/jbettini/Desktop/Lemin/srcs/main.c:24:5
 
 Indirect leak of 24100 byte(s) in 4820 object(s) allocated from:
     #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4d3831 in ft_strdup /home/jbettini/Desktop/Lemin/libft/ft_strdup.c:21:8
-    #2 0x4cd425 in main /home/jbettini/Desktop/Lemin/srcs/main.c:22:26
+    #1 0x4d3721 in ft_strdup /home/jbettini/Desktop/Lemin/libft/ft_strdup.c:21:8
+    #2 0x4cd335 in main /home/jbettini/Desktop/Lemin/srcs/main.c:20:26
 
-Indirect leak of 17376 byte(s) in 362 object(s) allocated from:
+Indirect leak of 8688 byte(s) in 181 object(s) allocated from:
     #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4cb532 in getAnt /home/jbettini/Desktop/Lemin/srcs/distribution.c:38:20
-
-Indirect leak of 4320 byte(s) in 180 object(s) allocated from:
-    #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4d349d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
-    #2 0x4cc0d9 in handleAnts /home/jbettini/Desktop/Lemin/srcs/distribution.c
-    #3 0x4cd481 in main /home/jbettini/Desktop/Lemin/srcs/main.c:28:5
+    #1 0x4cb4f2 in getAnt /home/jbettini/Desktop/Lemin/srcs/distribution.c:38:20
 
 Indirect leak of 4320 byte(s) in 180 object(s) allocated from:
     #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4d349d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
-    #2 0x4cd481 in main /home/jbettini/Desktop/Lemin/srcs/main.c:28:5
+    #1 0x4d338d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
+    #2 0x4cc002 in handleAnts /home/jbettini/Desktop/Lemin/srcs/distribution.c
+    #3 0x4cd391 in main /home/jbettini/Desktop/Lemin/srcs/main.c:25:5
 
-Indirect leak of 288 byte(s) in 4 object(s) allocated from:
+Indirect leak of 3024 byte(s) in 42 object(s) allocated from:
     #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
-    #1 0x4ccb2d in getEmptyPath /home/jbettini/Desktop/Lemin/srcs/init.c:37:18
-    #2 0x4d2317 in createSolution /home/jbettini/Desktop/Lemin/srcs/solution.c:408:51
-    #3 0x4cd461 in main /home/jbettini/Desktop/Lemin/srcs/main.c:27:5
+    #1 0x4cca3d in getEmptyPath /home/jbettini/Desktop/Lemin/srcs/init.c:36:18
+    #2 0x4d2088 in createSolution /home/jbettini/Desktop/Lemin/srcs/solution.c:400:49
+    #3 0x4cd371 in main /home/jbettini/Desktop/Lemin/srcs/main.c:24:5
+
+Indirect leak of 1032 byte(s) in 43 object(s) allocated from:
+    #0 0x49a19d in malloc (/home/jbettini/Desktop/Lemin/lem-in+0x49a19d)
+    #1 0x4d338d in ft_lstnew /home/jbettini/Desktop/Lemin/libft/ft_lstnew.c:19:7
+    #2 0x4cd371 in main /home/jbettini/Desktop/Lemin/srcs/main.c:24:5
