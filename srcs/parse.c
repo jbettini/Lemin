@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 19:17:50 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/06 10:42:38 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/16 20:13:47 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_simulation    *parseStdin() {
 
     while ((line = get_next_line(0))) {
         line = ft_strdup_except(line, '\n');
-        ft_putendl(line);
+        // ft_putendl(line);
         if (isNullOrEmpty(line))
             break ;
         if (isComment(line)) {   
@@ -77,7 +77,7 @@ t_simulation    *parseStdin() {
                     ft_lstadd_back(&simu->roomsNames, ft_lstnew(ft_strdup(r->name)));
                     ft_lstadd_back(&simu->graph->rooms, ft_lstnew(r));
                     simu->graph->numRooms++;
-                    ft_putstr(nextLine);  
+                    // ft_putstr(nextLine);  
                     free(nextLine);
                 }
             } else

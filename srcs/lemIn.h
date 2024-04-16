@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:22:29 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/16 17:48:11 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:49:56 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct  s_simulation
     t_list  *fasterPath;
     t_list  *bestPath;
     t_list  *antsQueue;
+    t_list  *antsHandled;
 }               t_simulation;
 
 typedef struct  s_path

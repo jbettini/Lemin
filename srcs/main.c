@@ -6,11 +6,13 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 04:21:39 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/16 17:48:37 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/16 20:08:01 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemIn.h"
+
+// t_simulation *simu;
 
 int main (int ac, char **av) {
     (void)av;
@@ -18,6 +20,7 @@ int main (int ac, char **av) {
         return invalidNumOfArg();
     startTimer();
     t_simulation	*simu = parseStdin();
+    // simu = parseStdin();
     if (isIncompleteSimulation(simu))
         handleErrorWithoutStr(dataEnoughError);
     simu->visu = false;
