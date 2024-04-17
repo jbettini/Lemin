@@ -5,8 +5,8 @@ void handle_sigint(int sig) {
     SDL_DestroyRenderer(v.render);
     SDL_DestroyWindow(v.w);
     SDL_Quit();
-    // sleep(5);
-    // clean all
+    sleep(5);
+    system("leaks visu-hex");
     exit(0); 
 }
 
@@ -77,6 +77,7 @@ void    initVisu(t_visu *v) {
     v->zoom.dezoom = false;
     v->zoom.Factor = 60.0;
     v->queue = NULL;
+    v->vcolors = NULL;
     
     initPos(0, 0,&(v->mouse));
     initPos(0, 0,&(v->offset));

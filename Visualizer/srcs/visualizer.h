@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:22:29 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/08 12:58:37 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/17 04:57:13 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct  s_visu
     t_pos           mouse;
     t_pos           offset;
     t_list          *queue;
+    t_vcolors       *vcolors;
 }               t_visu;
 
 
@@ -82,8 +83,8 @@ t_color getGreenColor();
 t_color getRedColor();
 t_color getBlueColor();
 
-
-t_simulation *parseStdin(void);
+void cleanSimulation(t_simulation *simulation);
+t_simulation *parseStdin(bool visu);
 
 
 #endif

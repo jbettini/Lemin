@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 01:22:29 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/16 20:31:23 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/17 05:01:47 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
     #define LEM_IN
 
 #include "../libft/libft.h"
+typedef struct  s_vcolors
+{
+    t_color background;
+    t_color rooms;
+    t_color start;
+    t_color end;
+    t_color link;
+}				t_vcolors;
 
 typedef struct  s_room
 {
@@ -24,8 +32,7 @@ typedef struct  s_room
     int     isSeen;
     bool    isInqueue;
     bool    upUsed;
-    
-    int     usedInPath;         // need an update maybe
+    int     usedInPath;
     int     neighSize;
 }				t_room;
 
@@ -48,6 +55,8 @@ typedef struct  s_simulation
     t_list  *fasterPath;
     t_list  *bestPath;
     t_list  *antsQueue;
+    
+    t_vcolors   *vColors;
 }               t_simulation;
 
 typedef struct  s_path
@@ -58,16 +67,11 @@ typedef struct  s_path
 		int		pathSize;
     	bool    unique;
         int     numsOfPbRooms;
-
-    // distribution
         int     antsInPath;
         t_list  *ants;
         bool    full;
         bool    sorted;
         t_color *color;
-        
-    
-    // heuristic
 		float		heuristic;
         float       totalWeigh;
 }               t_path;
@@ -88,6 +92,10 @@ typedef struct  s_ant
 
 # define NOT_SEEN   0
 # define SEEN       1
+
+
+
+
 
 //solution.c
 void    createSolution(t_simulation *simu);
@@ -127,6 +135,7 @@ void    handleErrorWithStr(char *line, int (*fun)(char *));
 int     dataEnoughError(void);
 
 // init.c
+t_vcolors       *getVcolors(void);
 t_graph         *getEmptyGraph(void);
 t_simulation    *getEmptySimulation(void);
 t_room          *roomCopy(t_room *src);
@@ -136,7 +145,7 @@ void            initProblematicNodes(t_list **allPaths);
 
 // //parse.c
 void            handleLink(char *str, t_simulation **simu);
-t_simulation    *parseStdin();
+t_simulation    *parseStdin(bool visu);
 
 // pathsCreate.c
 t_path  *createPath(t_list **queue, t_room *start);
@@ -191,5 +200,12 @@ bool    isProblematicNode(t_room *r);
 bool    isPositiveNumber(char *str);
 bool    isValidNum(char *str);
 bool    isIncompleteSimulation(t_simulation *simu);
+
+// color.c
+t_color getGreyColor();
+t_color getWhiteColor();
+t_color getGreenColor();
+t_color getRedColor();
+t_color getBlueColor();
 
 #endif

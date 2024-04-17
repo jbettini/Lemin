@@ -23,9 +23,11 @@ void    handleZoom(int centerX, int centerY, t_visu *v) {
 }
 
 void    drawLink(t_list *roomList, t_visu *v) {
-    SDL_SetRenderDrawColor(v->render, 20, 20, 20, 255);
+    t_color link = v->vcolors->link;
+    t_color bg = v->vcolors->background;
+    SDL_SetRenderDrawColor(v->render, bg.r, bg.g, bg.b, 255);
     SDL_RenderClear(v->render);
-    SDL_SetRenderDrawColor(v->render, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(v->render, link.r, link.g, link.b, 255);
     while (roomList) {
         t_room *currentRoom = (t_room *)roomList->content;
         t_list *neighbors = currentRoom->neigh;
@@ -48,11 +50,11 @@ void    drawRooms(t_list *roomList, t_visu *v) {
     if (v->zoom.Factor > 1) {
         while (tmp) {
             t_room *currentRoom = (t_room *)tmp->content;
-            t_color color = getBlueColor();
+            t_color color = v->vcolors->rooms;
             if (currentRoom->isStart)
-                color = getRedColor();
+                color = v->vcolors->start;
             else if (currentRoom->isEnd)
-                color = getGreenColor();
+                color = v->vcolors->end;
             drawFilledCircle(v->render, (currentRoom->posX * v->zoom.Factor) + v->offset.x, \
                                 (currentRoom->posY * v->zoom.Factor) + v->offset.y, 0.3 * v->zoom.Factor, color);
             tmp = tmp->next;

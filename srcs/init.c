@@ -6,11 +6,21 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 19:18:31 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/16 17:41:28 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/17 05:02:35 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemIn.h"
+
+t_vcolors        *getVcolors(void) {
+    t_vcolors   *ret = malloc(sizeof(t_vcolors));
+    ret->background = getGreyColor();
+    ret->link = getWhiteColor();
+    ret->start = getRedColor();
+    ret->end = getGreenColor();
+    ret->rooms = getBlueColor();
+    return ret;
+}
 
 t_graph     *getEmptyGraph(void) {
     t_graph *graph = malloc(sizeof(t_graph) * 1);
@@ -29,6 +39,7 @@ t_simulation    *getEmptySimulation(void) {
     simu->allPaths = NULL;
     simu->fasterPath = NULL;
     simu->bestPath = NULL;
+    simu->vColors = NULL;
     return simu;
 }
 

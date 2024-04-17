@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 01:16:22 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/08 12:44:52 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/17 05:04:18 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,11 @@ int main(int ac, char**av) {
         initVisu(&v);
 
         
-        t_simulation	*simu = parseStdin();
+        t_simulation	*simu = parseStdin(true);
         if (isIncompleteSimulation(simu))
             return dataEnoughError();
-        simu->visu = true;
+        v.vcolors = simu->vColors;
         createSolution(simu);
-        // handleColors(simu);
         assignColor(simu->bestPath);
         handleAnts(simu->bestPath, simu);
         drawGraph(simu, simu->graph->startRoom->posX, simu->graph->startRoom->posY, &v);
@@ -86,10 +85,11 @@ int main(int ac, char**av) {
             drawGraph(simu, simu->graph->startRoom->posX, simu->graph->startRoom->posY, &v);
             SDL_Delay(10);
         }
-
+        cleanSimulation(simu);
         SDL_DestroyRenderer(v.render);
         SDL_DestroyWindow(v.w);
         SDL_Quit();
     }
+    system("leaks visu-hex");
     return (0);
 }

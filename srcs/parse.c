@@ -6,11 +6,93 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 19:17:50 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/16 20:24:06 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/17 05:42:09 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemIn.h"
+
+enum prefix {
+    BACKGROUND,
+    LINK,
+    ROOMS,
+    START,
+    END,
+    UNDEFINED
+};
+
+bool    positifNum(char *str){
+    for (int i = 0; str[i]; i++)
+        if (!(ft_isdigit(str[i])))
+            return false;
+    return true;
+}
+
+bool    isGoodARGBValue(char *argb){
+    if (!positifNum(argb))
+        return false;
+    else if (ft_atoi(argb) > 255)
+        return false;
+    return true;
+}
+
+int     getPrefix(char *prefix) {
+    if (ft_strequ(prefix, "#background"))
+        return BACKGROUND;
+    else if (ft_strequ(prefix, "#link"))
+        return LINK;
+    else if (ft_strequ(prefix, "#start"))
+        return START;
+    else if (ft_strequ(prefix, "#end"))
+        return END;
+    else if (ft_strequ(prefix, "#rooms"))
+        return ROOMS;
+    else
+        return UNDEFINED;
+}
+
+int     getSuffix(char *suffix) {
+    char **data = ft_split(suffix, ',');
+    if (ft_strslen(data) != 3) {
+        freeTab(data);
+        return 0;
+    } else if (!isGoodARGBValue(data[0]) || !isGoodARGBValue(data[1]) || !isGoodARGBValue(data[2])) {
+        freeTab(data);
+        return 0;
+    }
+    freeTab(data);
+    return 1;
+}
+
+void    handleComment(char *line, t_simulation *s) {
+    char **data = ft_split(line, ':');
+    if (ft_strslen(data) == 2) {
+            colorPrint(TXT_CYAN, "\n\n---IN FUN--\n\n");
+        int tmp = getPrefix(data[0]);
+        int tmp2 = getSuffix(data[1]);
+        if (tmp != UNDEFINED && tmp2) {
+            colorPrint(TXT_CYAN, "\n\n---IN CONDITION--\n\n");
+            char **colors = ft_split(data[1], ',');
+            t_color c;
+            c.a = 255;
+            c.r = ft_atoi(colors[0]);
+            c.g = ft_atoi(colors[1]);
+            c.b = ft_atoi(colors[2]);
+            if (tmp == LINK)
+                s->vColors->link = c;
+            else if (tmp == BACKGROUND)
+                s->vColors->background = c;
+            else if (tmp == START)
+                s->vColors->start = c;
+            else if (tmp == END)
+                s->vColors->end = c;
+            else if (tmp == ROOMS)
+                s->vColors->rooms = c;
+            freeTab(colors);
+        }
+    }
+    freeTab(data);
+}
 
 void    handleLink(char *str, t_simulation **simu) {
     char    **args = ft_split(str, '-');
@@ -33,17 +115,21 @@ void    handleLink(char *str, t_simulation **simu) {
     freeTab(args);
 }
 
-t_simulation    *parseStdin() {
-    t_simulation    *simu   = getEmptySimulation();
-    char            *line;
+t_simulation    *parseStdin(bool visu) {
     int             step = 0;
-
+    char            *line = NULL;
+    t_simulation    *simu   = getEmptySimulation();
+    simu->visu = visu;
+    if (simu->visu)
+        simu->vColors = getVcolors();
     while ((line = get_next_line(0))) {
         line = ft_strdup_except(line, '\n');
-        // ft_putendl(line);
+        ft_putendl(line);
         if (isNullOrEmpty(line))
             break ;
-        if (isComment(line)) {   
+        if (isComment(line)) {
+            if (simu->visu)
+                handleComment(line, simu); 
             free(line);
             continue ;
         } else if (isPositiveNumber(line)) {
@@ -77,7 +163,7 @@ t_simulation    *parseStdin() {
                     ft_lstadd_back(&simu->roomsNames, ft_lstnew(ft_strdup(r->name)));
                     ft_lstadd_back(&simu->graph->rooms, ft_lstnew(r));
                     simu->graph->numRooms++;
-                    // ft_putstr(nextLine);  
+                    ft_putstr(nextLine);  
                     free(nextLine);
                 }
             } else

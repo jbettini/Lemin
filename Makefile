@@ -6,12 +6,13 @@
 #    By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 05:33:19 by jbettini          #+#    #+#              #
-#    Updated: 2024/04/16 21:21:33 by jbettini         ###   ########.fr        #
+#    Updated: 2024/04/17 04:23:18 by jbettini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror -g -fPIE -O -fsanitize=address
+CFLAGS		=	-Wall -Wextra -Werror -g -O
+# -fPIE # -fsanitize=address
 RM 			= 	rm -f
 NAME		=	lem-in
 SRC			=	$(wildcard srcs/*.c) 

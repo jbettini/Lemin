@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:29:37 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/06 10:25:20 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/17 04:21:22 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ int     linkAlreadyExists(char *badLine) {
 void    handleErrorWithoutStr(int (*fun)(void)) {
     ft_putstr(TXT_RED);
     fun();
-    // Maybe need to add cleaning simu here 
-    // system("leaks lem-in");
+    system("leaks lem-in");
     exit(1);
 }
 
@@ -68,8 +67,7 @@ void    handleErrorWithStr(char *line, int (*fun)(char *)) {
     ft_putstr(TXT_RED);
     fun(line);
     safeFree(line);
-    // Maybe need to add cleaning simu here 
-    // system("leaks lem-in");
+    system("leaks lem-in");
     exit(1);
 }
 

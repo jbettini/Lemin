@@ -6,16 +6,17 @@
 #    By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/31 01:47:44 by jbettini          #+#    #+#              #
-#    Updated: 2024/03/31 11:17:44 by jbettini         ###   ########.fr        #
+#    Updated: 2024/04/17 04:23:43 by jbettini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -O -fPIE -pie `sdl2-config --cflags` 
+CFLAGS = -Wall -Wextra -Werror -g -O -fPIE `sdl2-config --cflags` 
+# -pie
 LFLAGS = `sdl2-config --libs`
 
 RM = rm -f
-NAME = Visu-hex
+NAME = visu-hex
 SRC_DIR := ../srcs
 
 M_SRC := $(filter-out $(SRC_DIR)/main.c, $(wildcard $(SRC_DIR)/*.c))

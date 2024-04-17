@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 23:26:32 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/16 21:16:26 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/17 05:07:24 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void    cleanPath(void *tPath) {
     ft_lstclear(&path->multiRoom, noFree);
     ft_lstclear(&path->problematicRoom, noFree);
     ft_lstclear(&path->ants, noFree);
-    // Maybe need to clean colors here
+    if (path->color != NULL)
+        free(path->color);
     free(path);
     path = NULL;
     tPath = NULL;
@@ -49,7 +50,6 @@ void    cleanPaths(void *tPaths) {
 
 void    cleanAnt(void *tAnt) {
     t_ant *ant = (t_ant *)tAnt;
-    // Maybe need to free colors here
     free(ant);
     ant = NULL;
     tAnt = NULL;    
@@ -61,9 +61,9 @@ void    cleanSimulation(t_simulation *simulation) {
     ft_lstclear(&simulation->bestPath, noFree);
     ft_lstclear(&simulation->fasterPath, cleanPaths);
     ft_lstclear(&simulation->allPaths, cleanPaths);
-
-    
     ft_lstclear(&simulation->antsQueue, cleanAnt);
+    if (simulation->vColors)
+        free(simulation->vColors);
     free(simulation);
     simulation = NULL;
 }

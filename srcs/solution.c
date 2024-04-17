@@ -373,21 +373,15 @@ t_list            *createHPath(t_simulation *s){
     t_list  *rest = NULL;
     t_path  *used = NULL;
     t_list  *hPath = getAllUniquePaths(s->allPaths);
-    // int    i = 0;
     do
     {
         if (rest)
             ft_lstclear(&rest, noFree);
         rest = deleteUsedPath(s->allPaths, hPath);
         if(rest) {
-            // calculateHeuristic(&rest);
-            // printPaths(rest);
-            // colorPrint(TXT_BLUE, "-----------------------------------SELECTED PATHS---------------------------------------------------------------------------------------------\n");
+            calculateHeuristic(&rest);
             used = findBestHeuristic(rest);
-            // printPath(used);
             ft_lstadd_back(&hPath, ft_lstnew(used));
-            // printf("%d", i++);
-            // colorPrint(TXT_BLUE, "\n--------------------------------------------------------------------------------------------------------------------------------\n");
         }
     } while (rest);
     ret = sortS(hPath);
@@ -397,9 +391,11 @@ t_list            *createHPath(t_simulation *s){
 
 void    createSolution(t_simulation *simu) {
     
-    ft_lstadd_back(&simu->fasterPath, ft_lstnew(pathFinding(simu, simu->graph->startRoom)));
-    initProblematicNodes(&(simu->fasterPath));
-    if (simu->ants <= 0 || ft_lstsize(simu->fasterPath) == 0)
+    t_list  *allFaster = pathFinding(simu, simu->graph->startRoom);
+    if (allFaster) {
+        ft_lstadd_back(&simu->fasterPath, ft_lstnew(allFaster));
+        initProblematicNodes(&(simu->fasterPath));
+    } else if (simu->ants <= 0 || ft_lstsize(simu->fasterPath) == 0)
         handleErrorWithoutStr(dataEnoughError);
     t_list  *faster = fasterAugmentedPath(simu->fasterPath->content);
     t_list *tmp = simu->graph->startRoom->neigh;
@@ -412,11 +408,9 @@ void    createSolution(t_simulation *simu) {
     subsetsMultiRoom(&(simu->allPaths));
     initProblematicNodes(&(simu->allPaths));
     t_list  *flow = createHPath(simu);
-    
     simu->bestPath = flow;
-    printf("faster %d : flow %d\n", ft_lstsize(faster), ft_lstsize(flow));
+    // printf("faster %d : flow %d\n", ft_lstsize(faster), ft_lstsize(flow));
     if (ft_lstsize(faster) >= ft_lstsize(flow) || simu->ants <= ft_lstsize(faster)) {
-        colorPrint(TXT_RED, "\n-------------------------------------FASTER CHOOSED\n");
         simu->bestPath = faster;
         ft_lstclear(&flow, noFree);
     } else

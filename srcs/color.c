@@ -1,4 +1,4 @@
-#include "visualizer.h"
+#include "lemIn.h"
 
 t_color getRedColor(){
     t_color color;
@@ -21,9 +21,9 @@ t_color getGreenColor(){
 t_color getGreyColor(){
     t_color color;
     color.a = 255;
-    color.r = 200;
-    color.g = 200;
-    color.b = 200;
+    color.r = 20;
+    color.g = 20;
+    color.b = 20;
     return color;
 }
 
@@ -36,3 +36,11 @@ t_color getBlueColor(){
     return color;
 }
 
+t_color getWhiteColor(){
+    t_color color;
+    color.a = 255;
+    color.r = 255;
+    color.g = 255;
+    color.b = 255;
+    return color;
+}
