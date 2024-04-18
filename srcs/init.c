@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 19:18:31 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/18 10:55:25 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/18 23:15:02 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,14 @@ t_room *roomCopy(t_room *src) {
 t_room *roomConstructor(char *str) {
     char **splitArg = ft_split(str, ' ');
     t_room *newRoom = NULL;
-    if (ft_strslen(splitArg) != 3)
+    if (ft_strslen(splitArg) != 3) {
+        freeTab(splitArg);
         return newRoom;
-    else if (!isValidNum(splitArg[1]) && !isValidNum(splitArg[2]))
+    }
+    else if (!isValidNum(splitArg[1]) && !isValidNum(splitArg[2])) {
+        freeTab(splitArg);
         return newRoom;
+    }
     else {
         newRoom = malloc(sizeof(t_room));
         newRoom->name = ft_strdup(splitArg[0]);

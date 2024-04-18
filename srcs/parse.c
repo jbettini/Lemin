@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 19:17:50 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/18 01:45:18 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/18 23:46:14 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,8 +166,7 @@ t_simulation    *parseStdin(bool visu) {
                 }
             } else
                 handleErrorWithStr(line, badInputFile);
-        } 
-        else if (isRoom(line)) {
+        } else if (isRoom(line)) {
             if (step == 1) {
                 t_room *r = roomConstructor(line);
                 bool    validName = nameIsValid(r, simu->roomsNames);
@@ -179,12 +178,10 @@ t_simulation    *parseStdin(bool visu) {
                 simu->graph->numRooms++;
             } else
                 handleErrorWithStr(line, badInputFile);
-        } 
-        else if (isLink(line)) {
+        } else if (isLink(line)) {
             step = 2;
             handleLink(line, &simu);
-        } 
-        else {
+        } else {
             free(line);
             break ;
         }

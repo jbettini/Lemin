@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:29:37 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/18 01:33:42 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/18 23:47:18 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,3 @@ void    handleErrorWithStr(char *line, int (*fun)(char *)) {
     safeFree(line);
     exit(1);
 }
-

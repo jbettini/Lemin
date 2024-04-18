@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:30:19 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/18 19:23:10 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/18 21:15:30 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ void    antsMoving(t_list   *ants) {
     t_ant   *ant = NULL;
     int     numOfLine = 0;
     bool    action = false;
-    do
+    do 
     {
         if (ft_lstsize(queue) == 0 && ft_lstsize(tmp) == 0)
             break;

@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 01:16:22 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/18 01:41:17 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/18 23:05:10 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main(int ac, char**av) {
         
         t_simulation	*simu = parseStdin(true);
         if (isIncompleteSimulation(simu))
-            return dataEnoughError();
+            handleErrorWithoutStr(dataEnoughError);
         v.vcolors = simu->vColors;
         createSolution(simu);
         assignColor(simu->bestPath);

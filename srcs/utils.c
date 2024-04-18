@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:07:42 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/06 10:51:55 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/18 23:49:39 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ bool    isValidNum(char *str){
     int i = 0;
     if (str[i] == '-')
         i++;
+    if (str[i] == 0)
+        return false;
     while(str[i]) {
         if (!(ft_isdigit(str[i])))
             return false;
