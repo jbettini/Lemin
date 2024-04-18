@@ -6,7 +6,6 @@ void handle_sigint(int sig) {
     SDL_DestroyWindow(v.w);
     SDL_Quit();
     sleep(5);
-    system("leaks visu-hex");
     exit(0); 
 }
 

@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 19:18:31 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/17 05:02:35 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/18 10:55:25 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void            initProblematicNodes(t_list **allPaths){
             }
             tmp->numsOfPbRooms = pbNodes;
             tmp->heuristic = 1 / (tmp->pathSize + (tmp->numsOfPbRooms * 1.5));
-            // tmp->heuristic = 1 / (tmp->pathSize + ((tmp->numsOfPbRooms + tmp->totalWeigh) * 2.0));
+            // tmp->heuristic = 1 / ((tmp->pathSize )+ ((tmp->numsOfPbRooms + tmp->totalWeigh) * 2.0));
             if (pbNodes == 0)
                 tmp->unique = true;
             pbNodes = 0;

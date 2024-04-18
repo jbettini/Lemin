@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 19:17:50 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/17 05:42:09 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/18 01:45:18 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,9 @@ int     getSuffix(char *suffix) {
 void    handleComment(char *line, t_simulation *s) {
     char **data = ft_split(line, ':');
     if (ft_strslen(data) == 2) {
-            colorPrint(TXT_CYAN, "\n\n---IN FUN--\n\n");
         int tmp = getPrefix(data[0]);
         int tmp2 = getSuffix(data[1]);
         if (tmp != UNDEFINED && tmp2) {
-            colorPrint(TXT_CYAN, "\n\n---IN CONDITION--\n\n");
             char **colors = ft_split(data[1], ',');
             t_color c;
             c.a = 255;

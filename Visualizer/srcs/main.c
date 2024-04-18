@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 01:16:22 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/17 05:04:18 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/18 01:41:17 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int main(int ac, char**av) {
         assignColor(simu->bestPath);
         handleAnts(simu->bestPath, simu);
         drawGraph(simu, simu->graph->startRoom->posX, simu->graph->startRoom->posY, &v);
-        
         while (v.run) {
             if (SDL_PollEvent(&v.event)) {
                 switch (v.event.type) {
@@ -90,6 +89,5 @@ int main(int ac, char**av) {
         SDL_DestroyWindow(v.w);
         SDL_Quit();
     }
-    system("leaks visu-hex");
     return (0);
 }

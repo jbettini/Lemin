@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   solution.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/18 02:02:54 by jbettini          #+#    #+#             */
+/*   Updated: 2024/04/18 19:21:26 by jbettini         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lemIn.h"
 
 void    resetEverything(t_simulation *s) {
@@ -207,9 +219,78 @@ t_list  *sortH(t_list   *unsorted) {
     return ret;
 }
 
-t_path  *findBestHeuristic(t_list   *allPaths) {
+t_list  *getAllEquivalentHeuristics(t_path *p ,t_list *allP) {
+    t_path  *tmp = NULL;
+    t_list  *ret = NULL;
+    while (allP) {
+        tmp = allP->content;
+        if (p->heuristic == tmp->heuristic)
+            ft_lstadd_back(&ret, ft_lstnew(tmp));
+        allP = allP->next;
+    }
+    return ret;
+}
+
+bool    pathUseRoom(t_path *p, char *name) {
+    t_room  *r = NULL;
+    t_list  *rList = p->roomList;
+    while (rList) {
+        r = rList->content;
+        if (ft_strequ(r->name, name))
+            return true;
+        rList = rList->next;
+    }
+    return false;
+}
+
+int     getFasterPathsOverlap(t_path *p, t_list *allp) {
+    int     overlap = 0;
+    t_path  *tmp = NULL;
+    t_room  *rtmp = NULL;
+    t_list  *paths = NULL;
+    t_list  *ltmp = p->roomList;
+    while (ltmp) {
+        paths = allp;
+        rtmp = ltmp->content;
+        while (paths) {
+            tmp = paths->content;
+            if (pathUseRoom(tmp, rtmp->name) && p->pathSize > tmp->pathSize)
+                overlap++;
+            paths = paths->next;
+        }
+        ltmp = ltmp->next;
+    }
+    return overlap;
+}
+
+t_path *getTheBestHeuristic(t_list *heuristics, t_list *allP) {
+    t_path  *tmp = NULL;
+    t_path  *best = NULL;
+    int     overlap;
+    int     fasterPathsOverlap;
+    while (heuristics) {
+        tmp = heuristics->content;
+        fasterPathsOverlap = getFasterPathsOverlap(tmp, allP);
+        if (best == NULL) {
+            best = tmp;
+            overlap = fasterPathsOverlap;
+        } else if (fasterPathsOverlap < overlap) {
+            best = tmp;
+            overlap = fasterPathsOverlap;
+        } else if (fasterPathsOverlap == overlap && tmp->pathSize < best->pathSize) {
+            best = tmp;
+            overlap = fasterPathsOverlap;
+        }
+        heuristics = heuristics->next;
+    }
+    return best;
+}
+
+t_path  *findBestHeuristic(t_list   *allP) {
     t_path  *ret = NULL;
     t_path  *tmp = NULL;
+    // t_list  *bestH = NULL;
+    t_list  *allPaths = allP;
     while (allPaths) {
         tmp = allPaths->content;
         if (ret == NULL)
@@ -220,6 +301,9 @@ t_path  *findBestHeuristic(t_list   *allPaths) {
             ret = tmp;
         allPaths = allPaths->next;
     }
+    // bestH = getAllEquivalentHeuristics(ret, allP);
+    // ret = getTheBestHeuristic(bestH, allP);
+    // ft_lstclear(&bestH, noFree);
     return ret;
 }
 
@@ -361,6 +445,7 @@ void    calculateHeuristic(t_list **rest) {
         }
         p->numsOfPbRooms = pbNodes;
         p->heuristic = 1 / (p->pathSize + (p->numsOfPbRooms * 1.5));
+        // p->heuristic = 1 / (p->pathSize + ((p->numsOfPbRooms + p->totalWeigh) * 2.0));
         if (pbNodes == 0)
             p->unique = true;
         pbNodes = 0;
@@ -379,7 +464,7 @@ t_list            *createHPath(t_simulation *s){
             ft_lstclear(&rest, noFree);
         rest = deleteUsedPath(s->allPaths, hPath);
         if(rest) {
-            calculateHeuristic(&rest);
+            // calculateHeuristic(&rest);
             used = findBestHeuristic(rest);
             ft_lstadd_back(&hPath, ft_lstnew(used));
         }
@@ -410,9 +495,12 @@ void    createSolution(t_simulation *simu) {
     t_list  *flow = createHPath(simu);
     simu->bestPath = flow;
     // printf("faster %d : flow %d\n", ft_lstsize(faster), ft_lstsize(flow));
-    if (ft_lstsize(faster) >= ft_lstsize(flow) || simu->ants <= ft_lstsize(faster)) {
+    if (ft_lstsize(faster) > ft_lstsize(flow) || simu->ants <= ft_lstsize(faster)) {
         simu->bestPath = faster;
         ft_lstclear(&flow, noFree);
-    } else
+        // colorPrint(TXT_MAGENTA, "FASTER CHOOSED\n");
+    } else {
+        // colorPrint(TXT_MAGENTA, "FLOW CHOOSED\n");
         ft_lstclear(&faster, noFree);
+    }
 }

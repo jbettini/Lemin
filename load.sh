@@ -1,2 +1,1 @@
-make -C Visualizer &&
-./lem-in < test.map | ./Visualizer/Visu-hex;
+./lem-in < test.map | ./Visualizer/visu-hex;

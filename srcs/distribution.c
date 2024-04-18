@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:30:19 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/16 20:43:07 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:23:10 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void    resetForLoop(t_list *queue){
         ant->moved = false;
         tmp = tmp->next;
     }
-    // ft_putstr("\n");
+    ft_putstr("\n");
 }
 
 void    headToBack(t_list   **list) {
@@ -160,7 +160,7 @@ bool    moveForward(t_ant **ant) {
     (*ant)->moved = true;
     (*ant)->path->full = false;
     (*ant)->roomList = (*ant)->roomList->next;
-    // printMove(*ant);
+    printMove(*ant);
     if ((*ant)->roomList->next == NULL)
         return true;
     return false;
@@ -171,9 +171,13 @@ void    antsMoving(t_list   *ants) {
     t_list  *queue = NULL;
     t_ant   *ant = NULL;
     int     numOfLine = 0;
+    bool    action = false;
     do
     {
+        if (ft_lstsize(queue) == 0 && ft_lstsize(tmp) == 0)
+            break;
         while (tmp) {
+            action = true;
             ant = tmp->content;
             if (ant->path->full == true)
                 break;
@@ -182,16 +186,19 @@ void    antsMoving(t_list   *ants) {
             tmp = tmp->next;
         }
         while (queue) {
+            action = true;
             ant = queue->content;
             if (ant->moved == true)
                 break ;
             if (moveForward(&ant))
                 simplePop(&queue);
-            else 
+            else
                 headToBack(&queue);
         }
         resetForLoop(queue);
-        numOfLine++;
+        if (action)
+            numOfLine++;
+        action = false;
     } while (ft_lstsize(queue) > 0);
     ft_putendl(FANCY_RESET);
     ft_putstr(TXT_GREEN);

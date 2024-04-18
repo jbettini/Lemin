@@ -6,7 +6,7 @@
 /*   By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 04:21:39 by jbettini          #+#    #+#             */
-/*   Updated: 2024/04/17 04:20:40 by jbettini         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:22:48 by jbettini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,14 @@ int main (int ac, char **av) {
     (void)av;
     if (ac != 1)
         return invalidNumOfArg();
-    startTimer();
+    // startTimer();
     t_simulation	*simu = parseStdin(false);
     if (isIncompleteSimulation(simu))
         handleErrorWithoutStr(dataEnoughError);
     createSolution(simu);
     handleAnts(simu->bestPath, simu);
     antsMoving(simu->antsQueue);
-    stopTimer();
+    // stopTimer();
     cleanSimulation(simu);
-    system("leaks lem-in");
     return 0;
 }
