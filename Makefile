@@ -6,7 +6,7 @@
 #    By: jbettini <jbettini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 05:33:19 by jbettini          #+#    #+#              #
-#    Updated: 2024/04/18 01:38:12 by jbettini         ###   ########.fr        #
+#    Updated: 2024/07/04 04:52:36 by jbettini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ NAME		=	lem-in
 SRC			=	$(wildcard srcs/*.c) 
 LIBFT_DIR	=	libft
 LIBFT		=	$(LIBFT_DIR)/libft.a
+VISU		=	Visualizer
 
 TXT_RED = "\033[1;31m"
 TXT_GREEN = "\033[1;32m"
@@ -49,6 +50,12 @@ fclean: clean
 	@printf  $(TXT_RED)"Suppression de l'executable\n"$(FANCY_RESET)
 	@$(RM) -rf $(NAME) > /dev/null 2>&1
 
-re: fclean all
+re: fclean all 
+
+visu:
+	make -C $(VISU)
+
+cvisu:
+	make fclean -C $(VISU)
 
 .PHONY: all clean fclean re
